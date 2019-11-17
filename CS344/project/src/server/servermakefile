@@ -1,0 +1,2 @@
+ServerMain:	ServerMain.c HandleClient.c AccountManagement.c ProjectList.c ProjectManagement.c ServerFileIO.c
+	gcc -o ServerMain ServerMain.c HandleClient.c AccountManagement.c ProjectList.c ProjectManagement.c ServerFileIO.c -I ./includes

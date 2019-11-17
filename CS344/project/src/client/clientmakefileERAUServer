@@ -1,0 +1,2 @@
+ClientMain: ClientMain.c 
+	gcc ClientMain.c -o ClientMain

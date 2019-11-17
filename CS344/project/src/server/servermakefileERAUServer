@@ -1,0 +1,17 @@
+ServerMain:	ServerMain.c AccountManagement.o HandleClient.o ProjectList.o ProjectManagement.o ServerFileIO.o AccountManagement.h HandleConnection.h ProjectList.h ProjectManagement.h ServerIO.h
+	gcc ServerMain.c AccountManagement.o HandleClient.o ProjectList.o ProjectManagement.o ServerFileIO.o -o ServerMain
+
+AccountManagement.o: AccountManagement.c 
+	gcc -c AccountManagement.c 
+
+HandleClient.o: HandleClient.c 
+	gcc -c HandleClient.c
+
+ProjectList.o: ProjectList.c 
+	gcc -c ProjectList.c 
+
+ProjectManagement.o: ProjectManagement.c 
+	gcc -c ProjectManagement.c 
+
+ServerFileIO.o: ServerFileIO.c 
+	gcc -c ServerFileIO.c 

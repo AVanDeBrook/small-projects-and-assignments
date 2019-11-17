@@ -1,0 +1,23 @@
+Floors: 5
+Elevators: 3
+Speed: 5.75
+Capacity: 8
+Duration: 340
+Flow rates for each floor:
+	1: 0.17
+	2: 1.10
+	3: 2.63
+	4: 3.15
+	5: 3.11
+Wait times for each floor:
+	1: 0.00
+	2: 0.00
+	3: 0.00
+	4: 0.00
+	5: 0.00
+Floor w/ highest flow rate: 4
+Optimal floor: 0
+Min wait time: 0.00
+Max wait time: 0.00
+Mean wait time: 0.00
+Building type: Large
