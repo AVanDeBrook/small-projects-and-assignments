@@ -1,0 +1,13 @@
+# CS332 - Organization of Programming Languages
+This is the closest course my school had to what other schools would call a compilers class. We learned some fundamentals of computer science, such as, Lambda Calculus and Turing Machines and the 3 basic paradigms of programming languages (procedural, object-oriented, functional) and used all 3 to complete various assignments.
+
+This class also taught the basics of [Formal Language Theory](https://en.wikipedia.org/wiki/Formal_language) and how programming laguages are structed and designed, which gave some insight into how compilers for languages like C and Java work.
+
+We were taught how Deterministic Finite Automata (Finite State Machines), and Push-Down Automata work and how they could be used to process and verify strings for a given language, and in some cases how they could not.
+
+# In This Folder
+I've included the programming assignments from this class, mostly because we were given some very interesting problems to solve that made me actually think and design my programs, which is something that, up until this point, not many other classes had done.
+
+The first assignment was a fairly simple problem, given a list of rectangles determine which rectangles are overlapping. However, we were required to do this in a functional language, specifically, [Racket](https://racket-lang.org/). As someone who comes from a background of C and Java, and codes day to day in C and C++, this assignment was a total nightmare, but it was a very interesting problem and fun to solve in a language I was not used to. It made me rethink my design, and I appreciated the difficulty the new language added.
+
+The second assignment was to write a program in two different language paradigms (one procedural, one functional). We were given an Finite State Machine (FSM) definition and tasked with interpreting and processing a list of strings and determine whether those strings were in the language defined by the FSM. For the procedural protion, I used Java, mostly for its string processing methods, and minimized the use of objects. For the functional I used racket and followed the same design and structure as the procedural program by breaking down each part into a small function and then calling those functions from other functions as needed until the program was working as intended. More details on these assignments can be found in the comments of the Java program.
