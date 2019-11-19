@@ -23,7 +23,8 @@
  * The FSM is to be defined in a text file that will be passed to the program
  * through the first argument to the program (arg[0]).
  * The FSM shall have the following format:
- *      Line 1) States (comma seperated e.g 0, 1, 2, 3, 4, 5)
+ *      Line 1) States (comma seperated in ascending order,
+ *                      e.g 0, 1, 2, 3, 4, 5)
  *      Line 2) Initial State (e.g. 0)
  *      Line 3) Final State(s) (this can be 1 or more states e.g. 4)
  *      Line 4) Transition Table (this is a 2D array of size states.length x 2)
@@ -54,14 +55,15 @@
  *         It is important that the fsm definition is passed to the program
  *         in the first argument and the strings are passed in the second.
  *
- * Important assumption: The alphabet of this language is assumed to be {a, b}.
- *                       Because of the way the getNextState function works,
- *                       anything that is not an 'a' is assumed to be a 'b'.
+ * Important assumptions: The alphabet of this language is assumed to be
+ *                        {a, b}. Because of the way the getNextState function
+ *                        works, anything that is not an 'a' is assumed to
+ *                        be a 'b'.
  */
 import java.util.Scanner;
+import java.util.LinkedList;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.LinkedList;
 
 public class Manager {
 
@@ -78,7 +80,6 @@ public class Manager {
     public static void main(String[] args) {
         // Use an object of the class to avoid declaring all functions as static
         Manager main = new Manager();
-        boolean result;
         try {
             main.parseFSM(args[0]);
             main.parseStrings(args[1]);
@@ -90,22 +91,17 @@ public class Manager {
                 /**
                  * Kinda confusing one-liner.
                  * runStateMachine requires a character array and returns true
-                 * to accept a string and false to reject a string.
+                 * to accept a string, false to reject a string.
                  * So, we just use a ternary operator to print accept or reject on the string.
                  */
-                //System.out.println((main.runStateMachine(string.toCharArray()) == true) ? "accept" : "reject");
-
-                result = main.runStateMachine(string.toCharArray());
-                if (result) {
-                    System.out.println("accept");
-                } else {
-                    System.out.println("reject");
-                }
+                System.out.println((main.runStateMachine(string.toCharArray()) == true) ? "accept" : "reject");
             }
             System.out.println();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Specifiy input files for the program like so: java Manager [fsm file] [string file]");
             System.err.println("e.g. java Manager fsm.txt strings.txt");
+        } catch (Exception e) {
+            System.err.println("Unexpected error...");
         }
     }
 
