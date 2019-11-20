@@ -10,7 +10,7 @@ CPU_t cpu = {
 int main(int argc, char *argv[])
 {
     if (argc != 2) {
-        fprintf(stderr, "Please provide and input file, like so: .\%s [mem_in]\n", argv[0]);
+        fprintf(stderr, "Please provide an input file, like so: .\%s [mem_in]\n", argv[0]);
         return -1;
     }
     FILE *mem_in = fopen(argv[1], "r");
