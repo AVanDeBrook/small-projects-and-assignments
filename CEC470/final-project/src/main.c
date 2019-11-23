@@ -59,6 +59,6 @@ void executeInstruction(void)
         reg = (cpu.ir & 0x04) >> 2;
         method = (cpu.ir & 0x03);
 
-        doMemoryOperation((MemoryCode_e) opcode, (MemoryReg_e) reg, (MemoryMethod_e) method);
+        doMemoryOperation(cpu, (MemoryCode_e) opcode, (MemoryReg_e) reg, (MemoryMethod_e) method);
     }
 }
