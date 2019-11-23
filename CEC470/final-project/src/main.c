@@ -1,4 +1,6 @@
 #include "main.h"
+#include "arithmetic.h"
+#include "memory.h"
 
 CPU_t cpu = {
     .pc = 0,
@@ -21,10 +23,42 @@ int main(int argc, char *argv[])
     }
 
     while (cpu.memory[cpu.pc] != HALT_CODE) {
-        printf("%02x ", cpu.memory[cpu.pc++]);
-        if (cpu.pc % 10 == 0) {
-            printf("\n");
-        }
+        fetchNextInstruction();
+        executeInstruction();
     }
+
     return 0;
+}
+
+/**
+ * Stores the next instruction in the IR and increments the PC.
+ */
+void fetchNextInstruction(void)
+{
+    cpu.ir = cpu.memory[cpu.pc++];
+}
+
+void executeInstruction(void)
+{
+    // Math & Logic operations
+    uint8_t opcode, dest, src;
+    // Memory operations
+    uint8_t reg, method;
+    if (((cpu.ir & 0x80) >> 7) == 1) {
+        // Arithmetic/Logical opcode
+        opcode = (cpu.ir & 0xF0) >> 4;
+        dest = (cpu.ir & 0x0C) >> 2;
+        src = cpu.ir & 0x03;
+
+        doArithOperation(cpu, (ArithmeticCode_e) opcode, (ArithmeticDest_e) dest, (ArithmeticSrc_e) src);
+    } else if (((cpu.ir & 0x10) >> 4) == 1) {
+        // Branch/Jump opcode
+    } else {
+        // Memory opcode
+        opcode = (cpu.ir & 0x08) >> 3;
+        reg = (cpu.ir & 0x04) >> 2;
+        method = (cpu.ir & 0x03);
+
+        doMemoryOperation((MemoryCode_e) opcode, (MemoryReg_e) reg, (MemoryMethod_e) method);
+    }
 }
