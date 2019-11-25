@@ -1,6 +1,7 @@
 #include "main.h"
 #include "arithmetic.h"
 #include "memory.h"
+#include "branch.h"
 
 CPU_t cpu = {
     .pc = 0,
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Please provide an input file, like so: .\%s [mem_in]\n", argv[0]);
         return -1;
     }
+
     FILE *mem_in = fopen(argv[1], "r");
 
     uint8_t *mem_ptr = cpu.memory;
@@ -44,6 +46,9 @@ void executeInstruction(void)
     uint8_t opcode, dest, src;
     // Memory operations
     uint8_t reg, method;
+    // Branch type
+    uint8_t type;
+
     if (((cpu.ir & 0x80) >> 7) == 1) {
         // Arithmetic/Logical opcode
         opcode = (cpu.ir & 0xF0) >> 4;
@@ -53,6 +58,9 @@ void executeInstruction(void)
         doArithOperation(cpu, (ArithmeticCode_e) opcode, (ArithmeticDest_e) dest, (ArithmeticSrc_e) src);
     } else if (((cpu.ir & 0x10) >> 4) == 1) {
         // Branch/Jump opcode
+        type = cpu.ir & 0x07;
+
+        doBranchOperation(cpu, (BranchType_e) type);
     } else {
         // Memory opcode
         opcode = (cpu.ir & 0x08) >> 3;
