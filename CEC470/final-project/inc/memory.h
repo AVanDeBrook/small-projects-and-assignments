@@ -26,7 +26,7 @@ typedef enum _MemoryMethod_e {
 } MemoryMethod_e;
 
 /// ------ Function Prototypes ------
-void doMemoryOperation(CPU_t cpu, MemoryCode_e opcode, MemoryReg_e reg, MemoryMethod_e method);
-uint16_t getMemoryOperand(CPU_t cpu, MemoryMethod_e method);
+void doMemoryOperation(CPU_t *cpu, MemoryCode_e opcode, MemoryReg_e reg, MemoryMethod_e method);
+uint16_t getMemoryOperand(CPU_t *cpu, MemoryMethod_e method);
 
 #endif

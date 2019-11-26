@@ -12,22 +12,38 @@ CPU_t cpu = {
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2) {
-        fprintf(stderr, "Please provide an input file, like so: .\%s [mem_in]\n", argv[0]);
+    if (argc != 3) {
+        fprintf(stderr, "Please provide an input file, like so: .\%s [mem_in] [mem_out]\n", argv[0]);
         return -1;
     }
 
-    FILE *mem_in = fopen(argv[1], "r");
+    FILE *mem_out, *mem_in = fopen(argv[1], "r");
+
 
     uint8_t *mem_ptr = cpu.memory;
     while (!feof(mem_in)) {
         fscanf(mem_in, "%x", mem_ptr++);
     }
 
+    fclose(mem_in);
+
     while (cpu.memory[cpu.pc] != HALT_CODE) {
         fetchNextInstruction();
         executeInstruction();
+        printf("ACC: %d\n", cpu.acc);
     }
+
+    /*mem_out = fopen(argv[2], "w");
+
+    for (int i = 0; i < MEM_SIZE; i++) {
+        fprintf(mem_out, "%02x ", cpu.memory[i]);
+
+        if (i % 10 == 0) {
+            fprintf(mem_out, "\n");
+        }
+    }
+
+    fclose(mem_out);*/
 
     return 0;
 }
@@ -38,6 +54,7 @@ int main(int argc, char *argv[])
 void fetchNextInstruction(void)
 {
     cpu.ir = cpu.memory[cpu.pc++];
+    printf("IR: %02x\n", cpu.ir);
 }
 
 void executeInstruction(void)
@@ -55,18 +72,18 @@ void executeInstruction(void)
         dest = (cpu.ir & 0x0C) >> 2;
         src = cpu.ir & 0x03;
 
-        doArithOperation(cpu, (ArithmeticCode_e) opcode, (ArithmeticDest_e) dest, (ArithmeticSrc_e) src);
+        doArithOperation(&cpu, (ArithmeticCode_e) opcode, (ArithmeticDest_e) dest, (ArithmeticSrc_e) src);
     } else if (((cpu.ir & 0x10) >> 4) == 1) {
         // Branch/Jump opcode
         type = cpu.ir & 0x07;
 
-        doBranchOperation(cpu, (BranchType_e) type);
+        doBranchOperation(&cpu, (BranchType_e) type);
     } else {
         // Memory opcode
         opcode = (cpu.ir & 0x08) >> 3;
         reg = (cpu.ir & 0x04) >> 2;
         method = (cpu.ir & 0x03);
 
-        doMemoryOperation(cpu, (MemoryCode_e) opcode, (MemoryReg_e) reg, (MemoryMethod_e) method);
+        doMemoryOperation(&cpu, (MemoryCode_e) opcode, (MemoryReg_e) reg, (MemoryMethod_e) method);
     }
 }

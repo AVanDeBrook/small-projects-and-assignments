@@ -35,7 +35,7 @@ typedef enum _ArithmeticSrcs_e {
 } ArithmeticSrc_e;
 
 /// ------ Function Prototypes ------
-void doArithOperation(CPU_t cpu, ArithmeticCode_e opcode, ArithmeticDest_e dest, ArithmeticSrc_e src);
-uint16_t getArithOperand(CPU_t cpu, ArithmeticSrc_e src);
+void doArithOperation(CPU_t *cpu, ArithmeticCode_e opcode, ArithmeticDest_e dest, ArithmeticSrc_e src);
+uint16_t getArithOperand(CPU_t *cpu, ArithmeticSrc_e src);
 
 #endif

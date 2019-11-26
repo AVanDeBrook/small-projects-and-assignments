@@ -20,6 +20,6 @@ typedef enum _BranchType_e {
 } BranchType_e;
 
 /// ------ Function Prototypes ------
-void doBranchOperation(CPU_t cpu, BranchType_e type);
+void doBranchOperation(CPU_t *cpu, BranchType_e type);
 
 #endif

@@ -4,7 +4,7 @@ INCLUDE = ..\inc
 FLAGS = -g -I$(INCLUDE)
 
 main.exe: main.o arithmetic.o memory.o branch.o
-	$(CC) $(FLAGS) $(ODIR)\main.o $(ODIR)\arithmetic.o $(ODIR)\memory.o $(ODIR)\branch.o -o $(ODIR)\$@
+	$(CC) $(FLAGS) $(ODIR)\main.o $(ODIR)\arithmetic.o $(ODIR)\memory.o $(ODIR)\branch.o -o $@
 
 main.o: main.c
 	$(CC) $(FLAGS) -c $^ -o $(ODIR)\$@
@@ -23,3 +23,4 @@ branch.o: branch.c
 clean:
 	del $(ODIR)\*.exe
 	del $(ODIR)\*.o
+	del *.exe
