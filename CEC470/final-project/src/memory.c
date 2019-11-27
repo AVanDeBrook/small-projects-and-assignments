@@ -37,10 +37,10 @@ uint16_t getMemoryOperand(CPU_t *cpu, MemoryMethod_e method)
             operand = GET_OPERAND();
             break;
         case MEM_METHOD_CONST:
-            operand = GET_OPERAND(); // @TODO: Fixme
+            operand = cpu->memory[cpu->pc++];
             break;
         case MEM_METHOD_INDIR:
-            cpu->mar = GET_OPERAND();
+            cpu->mar = cpu->memory[GET_OPERAND()];
             operand = cpu->memory[cpu->mar];
             break;
         default:

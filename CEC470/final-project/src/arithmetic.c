@@ -10,7 +10,7 @@ void doArithOperation(CPU_t *cpu, ArithmeticCode_e opcode, ArithmeticDest_e dest
             } else if (dest == ARITH_DEST_ACC) {
                 cpu->acc &= getArithOperand(cpu, src);
             } else if (dest == ARITH_DEST_ADDR) {
-                cpu->mar &= getArithOperand(cpu, src);
+                cpu->mar &= cpu->memory[getArithOperand(cpu, src)];
             } else {
                 cpu->memory[cpu->mar] &= getArithOperand(cpu, src);
             }
@@ -23,7 +23,7 @@ void doArithOperation(CPU_t *cpu, ArithmeticCode_e opcode, ArithmeticDest_e dest
             } else if (dest == ARITH_DEST_ACC) {
                 cpu->acc |= getArithOperand(cpu, src);
             } else if (dest == ARITH_DEST_ADDR) {
-                cpu->mar |= getArithOperand(cpu, src);
+                cpu->mar |= cpu->memory[getArithOperand(cpu, src)];
             } else {
                 cpu->memory[cpu->mar] |= getArithOperand(cpu, src);
             }
@@ -34,9 +34,9 @@ void doArithOperation(CPU_t *cpu, ArithmeticCode_e opcode, ArithmeticDest_e dest
                 cpu->mar = dest;
                 cpu->memory[cpu->mar] ^= getArithOperand(cpu, src);
             } else if (dest == ARITH_DEST_ACC) {
-                cpu->acc ^= cpu->memory[getArithOperand(cpu, src)];
+                cpu->acc ^= getArithOperand(cpu, src);
             } else if (dest == ARITH_DEST_ADDR) {
-                cpu->mar ^= getArithOperand(cpu, src);
+                cpu->mar ^= cpu->memory[getArithOperand(cpu, src)];
             } else {
                 cpu->memory[cpu->mar] ^= getArithOperand(cpu, src);
             }
@@ -62,7 +62,7 @@ void doArithOperation(CPU_t *cpu, ArithmeticCode_e opcode, ArithmeticDest_e dest
             } else if (dest == ARITH_DEST_ACC) {
                 cpu->acc -= getArithOperand(cpu, src);
             } else if (dest == ARITH_DEST_ADDR) {
-                cpu->mar -= getArithOperand(cpu, src);
+                cpu->mar -= cpu->memory[getArithOperand(cpu, src)];
             } else {
                 cpu->memory[cpu->mar] -= getArithOperand(cpu, src);
             }
@@ -118,17 +118,17 @@ uint16_t getArithOperand(CPU_t *cpu, ArithmeticSrc_e src)
 
     switch (src) {
         case ARITH_SRC_INDIR:
-            cpu->mar = GET_OPERAND();
+            cpu->mar = cpu->memory[GET_OPERAND()];
             operand = cpu->memory[cpu->mar];
             break;
         case ARITH_SRC_ACC:
             operand = cpu->acc;
             break;
         case ARITH_SRC_CONST:
-            operand = GET_OPERAND();
+            operand = cpu->memory[cpu->pc++];
             break;
         case ARITH_SRC_MEM:
-            operand = GET_OPERAND();
+            operand = cpu->memory[GET_OPERAND()];
             break;
         default:
             break;

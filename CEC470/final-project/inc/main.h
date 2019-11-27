@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 /// ------ Constants & Definitions ------
-#define MEM_SIZE ((uint16_t) 65536)
+#define MEM_SIZE 65536
 
 /// ------ Macros ------
 #define GET_OPERAND() (cpu->memory[cpu->pc++] << 8) | (cpu->memory[cpu->pc++])

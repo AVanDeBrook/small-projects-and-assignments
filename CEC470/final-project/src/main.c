@@ -18,9 +18,9 @@ int main(int argc, char *argv[])
     }
 
     FILE *mem_out, *mem_in = fopen(argv[1], "r");
-
-
     uint8_t *mem_ptr = cpu.memory;
+
+    printf("Reading memory in from file...\n");
     while (!feof(mem_in)) {
         fscanf(mem_in, "%x", mem_ptr++);
     }
@@ -30,10 +30,13 @@ int main(int argc, char *argv[])
     while (cpu.memory[cpu.pc] != HALT_CODE) {
         fetchNextInstruction();
         executeInstruction();
-        printf("ACC: %d\n", cpu.acc);
+        printf("ACC:\t%02x\n", cpu.acc);
+        printf("MAR:\t%04x\n", cpu.mar);
     }
 
-    /*mem_out = fopen(argv[2], "w");
+
+    printf("Writing memory to output file...\n");
+    mem_out = fopen(argv[2], "w");
 
     for (int i = 0; i < MEM_SIZE; i++) {
         fprintf(mem_out, "%02x ", cpu.memory[i]);
@@ -43,7 +46,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    fclose(mem_out);*/
+    fclose(mem_out);
 
     return 0;
 }
@@ -54,7 +57,12 @@ int main(int argc, char *argv[])
 void fetchNextInstruction(void)
 {
     cpu.ir = cpu.memory[cpu.pc++];
-    printf("IR: %02x\n", cpu.ir);
+
+    if (cpu.ir == NOP_CODE) {
+        cpu.ir = cpu.memory[cpu.pc++];
+    }
+
+    printf("IR:\t%02x\n", cpu.ir);
 }
 
 void executeInstruction(void)
@@ -82,7 +90,7 @@ void executeInstruction(void)
         // Memory opcode
         opcode = (cpu.ir & 0x08) >> 3;
         reg = (cpu.ir & 0x04) >> 2;
-        method = (cpu.ir & 0x03);
+        method = cpu.ir & 0x03;
 
         doMemoryOperation(&cpu, (MemoryCode_e) opcode, (MemoryReg_e) reg, (MemoryMethod_e) method);
     }

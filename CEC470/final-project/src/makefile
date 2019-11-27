@@ -21,6 +21,5 @@ branch.o: branch.c
 .PHONY: clean
 
 clean:
-	del $(ODIR)\*.exe
 	del $(ODIR)\*.o
 	del *.exe
