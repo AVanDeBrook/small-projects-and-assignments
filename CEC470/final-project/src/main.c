@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     FILE *mem_out, *mem_in = fopen(argv[1], "r");
     uint8_t *mem_ptr = cpu.memory;
 
-    printf("Reading memory in from file...\n");
+    printf("Reading memory from %s...\n", argv[1]);
     while (!feof(mem_in)) {
         fscanf(mem_in, "%x", mem_ptr++);
     }
@@ -31,17 +31,17 @@ int main(int argc, char *argv[])
         fetchNextInstruction();
         executeInstruction();
         printf("ACC:\t%02x\n", cpu.acc);
-        printf("MAR:\t%04x\n", cpu.mar);
+        printf("MAR:\t%04x\n\n", cpu.mar);
     }
 
 
-    printf("Writing memory to output file...\n");
+    printf("\nWriting memory to %s...\n", argv[2]);
     mem_out = fopen(argv[2], "w");
 
     for (int i = 0; i < MEM_SIZE; i++) {
         fprintf(mem_out, "%02x ", cpu.memory[i]);
 
-        if (i % 10 == 0) {
+        if ((i + 1) % 16 == 0) {
             fprintf(mem_out, "\n");
         }
     }
@@ -62,6 +62,7 @@ void fetchNextInstruction(void)
         cpu.ir = cpu.memory[cpu.pc++];
     }
 
+    printf("PC:\t%04x\n", cpu.pc);
     printf("IR:\t%02x\n", cpu.ir);
 }
 
