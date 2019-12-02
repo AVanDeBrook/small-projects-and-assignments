@@ -16,10 +16,10 @@ void doMemoryOperation(CPU_t *cpu, MemoryCode_e opcode, MemoryReg_e reg, MemoryM
         case MEM_LOAD:
             if (reg == MEM_REG_ACC) {
                 // Load accumulator
-                cpu->acc = getMemoryOperand(cpu, reg, method);
+                cpu->acc = cpu->memory[getMemoryOperand(cpu, reg, method)];
             } else {
                 // Load index register (MAR)
-                cpu->mar = getMemoryOperand(cpu, reg, method);
+                cpu->mar = getMemoryOperand(cpu, reg, method);//cpu->memory[getMemoryOperand(cpu, reg, method)];
             }
 
             break;
@@ -34,7 +34,7 @@ uint16_t getMemoryOperand(CPU_t *cpu, MemoryReg_e reg, MemoryMethod_e method)
 
     switch (method) {
         case MEM_METHOD_ADDR:
-            operand = cpu->memory[GET_OPERAND()];
+            operand = GET_OPERAND();
             break;
         case MEM_METHOD_CONST:
             if (reg == MEM_REG_ACC) {
@@ -44,8 +44,8 @@ uint16_t getMemoryOperand(CPU_t *cpu, MemoryReg_e reg, MemoryMethod_e method)
             }
             break;
         case MEM_METHOD_INDIR:
-            //cpu->mar = cpu->memory[GET_OPERAND()];
-            operand = cpu->memory[cpu->memory[cpu->mar]];
+            operand = (cpu->memory[cpu->mar] << 8) | (cpu->memory[cpu->mar + 1]);
+            printf("\noperand = %04x\n", operand);
             break;
         default:
             break;

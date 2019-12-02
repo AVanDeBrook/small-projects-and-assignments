@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     while (cpu.memory[cpu.pc] != HALT_CODE) {
         fetchNextInstruction();
         executeInstruction();
+        printf("cpu.memory[0] = %02x\n", cpu.memory[0]);
         printf("ACC:\t%02x\n", cpu.acc);
         printf("MAR:\t%04x\n\n", cpu.mar);
     }
@@ -62,7 +63,7 @@ void fetchNextInstruction(void)
         cpu.ir = cpu.memory[cpu.pc++];
     }
 
-    printf("PC:\t%04x\n", cpu.pc);
+    //printf("PC:\t%04x\n", cpu.pc);
     printf("IR:\t%02x\n", cpu.ir);
 }
 
