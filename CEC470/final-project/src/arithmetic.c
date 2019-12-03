@@ -35,6 +35,7 @@ void doArithOperation(CPU_t *cpu, ArithmeticCode_e opcode, ArithmeticDest_e dest
                 cpu->memory[cpu->mar] ^= getArithOperand(cpu, dest, src);
             } else if (dest == ARITH_DEST_ACC) {
                 cpu->acc ^= getArithOperand(cpu, dest, src);
+                printf("ACC after XOR: %02x\n", cpu->acc);
             } else if (dest == ARITH_DEST_ADDR) {
                 cpu->mar ^= cpu->memory[getArithOperand(cpu, dest, src)];
             } else {
