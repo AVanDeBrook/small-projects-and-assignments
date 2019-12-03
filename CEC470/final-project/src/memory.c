@@ -34,7 +34,7 @@ void doMemoryOperation(CPU_t *cpu, MemoryCode_e opcode, MemoryReg_e reg, MemoryM
                     cpu->mar = (cpu->memory[mem_operand] << 8) | (cpu->memory[mem_operand + 1]);
                 } else {
                     mem_operand = getMemoryOperand(cpu, reg, method);
-                    cpu->mar = (mem_operand << 8) | (mem_operand + 1);
+                    cpu->mar = mem_operand;//(mem_operand << 8) | (mem_operand + 1);
                 }
             }
 
